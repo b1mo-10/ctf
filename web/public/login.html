@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="ᛃᚢᛊᛏ ᛚᛟᛟᚲ ᚨᚷᚨᛁᚾ" content="ᛏᚺᛖ ᛚᛟᚷᛁᚾ ᚢᛊᛖᚱᚾᚨᛗᛖ ᛊᚢᚾᚷᛃᛁᚾᚹᛟᛟ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Leveling CTF - Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Oswald', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        /* Background Image Overlay */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images4.alphacoders.com/138/1389936.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: brightness(40%) blur(2px);
+            z-index: -1;
+        }
+
+        /* Manga Quote Overlay */
+        .quote {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            width: 80%;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .login-container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            width: 320px;
+            z-index: 1;
+        }
+
+        h2 {
+            color: #ffcc00;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(255, 204, 0, 0.7);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #222;
+            color: #fff;
+        }
+
+        .btn {
+            background: #ffcc00;
+            color: #000;
+            font-weight: bold;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0px 4px 10px rgba(255, 204, 0, 0.7);
+        }
+
+        .btn:hover {
+            background: #ff9900;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="quote">"Arise... My Shadow Army!"</div>
+    <div class="login-container">
+        <h2>Login to the Shadow World</h2>
+  
+        <form action="/" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button class="btn" type="submit">Enter</button>
+        </form>
+    </div>
+</body>
+</html>

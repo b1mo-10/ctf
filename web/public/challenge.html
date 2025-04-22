@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome 2025!</title>
+    <style>
+        /* Background animation and styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        form {
+            background: #9ec0e0;
+            padding: 25px 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #0f4c85;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            margin: 0 0 20px;
+        }
+
+        .modal-content button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background-color: #c9302c;
+        }
+
+        /* Falling particles animation */
+        .falling-particle {
+            position: absolute;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall 5s infinite ease-in;
+            z-index: 0;
+        }
+                
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images8.alphacoders.com/138/1386891.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: brightness(40%) blur(2px);
+            z-index: -1;
+        }
+
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+    <link rel="icon" href="https://trustfoundry.net/wp-content/uploads/2022/07/cropped-fav-32x32.png" sizes="32x32" />
+</head>
+
+<body>
+    <div class="background"></div>
+    <form id="textForm" onsubmit="redirectToText(event)">
+        <h1>Enter your name!</h1>
+        <label for="inputBox"></label>
+        <input type="text" id="inputBox" name="inputBox" placeholder="Type here...">
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalText"></h2>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Falling Particles -->
+    <div id="particles">
+        <!-- Falling particles will be generated here -->
+    </div>
+
+    <script>
+        function XSS() {
+            return decodeURIComponent(window.location.search).includes('<') || decodeURIComponent(window.location.search).includes('>') || decodeURIComponent(window.location.hash).includes('<') || decodeURIComponent(window.location.hash).includes('>')
+        }
+        function getParameterByName(name) {
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+            results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Function to redirect on form submit
+        function redirectToText(event) {
+            event.preventDefault();
+            const inputBox = document.getElementById('inputBox');
+            const text = encodeURIComponent(inputBox.value);
+            window.location.href = `/challenge?text=${text}`;
+        }
+
+        // Function to display modal if 'text' query param exists
+        function checkQueryParam() {
+            const text = getParameterByName('text');
+            if (text && XSS() === false) {
+                const modal = document.getElementById('modal');
+                const modalText = document.getElementById('modalText');
+                modalText.innerHTML = `Welcome, ${text}!`;
+                textForm.remove()
+                modal.style.display = 'flex';
+            }
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            location.replace('/challenge')
+        }
+
+        // Function to generate random color
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Function to generate falling particles
+        function generateFallingParticles() {
+            const particlesContainer = document.getElementById("particles");
+
+            // Generate 100 particles with different animations, positions, and colors
+            for (let i = 0; i < 100; i++) {
+                let particle = document.createElement("div");
+                particle.classList.add("falling-particle");
+
+                // Randomize the particle's left position
+                particle.style.left = Math.random() * 100 + "vw";  // Left position from 0 to 100% of viewport width
+
+                // Randomize the particle's color
+                particle.style.backgroundColor = getRandomColor();
+
+                // Randomize animation delays
+                particle.style.animationDelay = Math.random() * 5 + "s";  // Random delay for staggered fall
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Generate particles when the page loads
+        window.onload = function () {
+            generateFallingParticles();
+            checkQueryParam();
+        };
+    </script>
+</body>
+
+</html>
