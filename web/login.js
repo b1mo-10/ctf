@@ -7,8 +7,9 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const sql = `SELECT * FROM users WHERE username='${username}' AND password='${password}'`;
-        const [results] = await db.query(sql);
+        // Only password is vulnerable to SQLi, username is parameterized
+        const sql = `SELECT * FROM users WHERE username = ? AND password = MD5('${password}')`;
+        const [results] = await db.query(sql, [username]);
 
         if (results.length > 0) {
             // Show the flag and a button to proceed to the challenge
@@ -62,11 +63,11 @@ router.post('/login', async (req, res) => {
                 </html>
             `);
         } else {
-            return res.send('Invalid credentials. Try again.');
+            return res.send('System is chllange your skills ');
         }
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('bimoo');
     }
 });
 
